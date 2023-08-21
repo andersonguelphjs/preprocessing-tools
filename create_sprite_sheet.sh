@@ -6,7 +6,7 @@
 # Default values
 TILE="3x"
 BACKGROUND="none"
-OUTPUT_FILE="splat_sprite_sheet.png"
+OUTPUT_FILE="$(date +'%Y%m%d_%H%M%S')_sprite_sheet.png"
 INPUT_FILES="*.png"
 
 # Parse command line arguments

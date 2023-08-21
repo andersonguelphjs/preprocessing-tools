@@ -6,9 +6,14 @@
 #./resize_images.sh (defaults to 64X64 and type .png)
 #./resize_images.sh --width 128 --height 128 --type jpg.
 
-WIDTH=64
-HEIGHT=64
+WIDTH=128
+HEIGHT=128
 FILE_TYPE="png"
+PADDING=15
+
+# Calculate the dimensions after considering padding
+RESIZE_WIDTH=$((WIDTH - 2*PADDING))
+RESIZE_HEIGHT=$((HEIGHT - 2*PADDING))
 
 # Parse command line arguments
 while [[ "$#" -gt 0 ]]; do
@@ -16,6 +21,7 @@ while [[ "$#" -gt 0 ]]; do
         -w|--width) WIDTH="$2"; shift ;;
         -h|--height) HEIGHT="$2"; shift ;;
         -t|--type) FILE_TYPE="$2"; shift ;;
+        -p|--padding) PADDING="$2"; shift ;;
         *) echo "Unknown parameter passed: $1"; exit 1 ;;
     esac
     shift
@@ -26,7 +32,7 @@ mkdir -p resized
 
 # Resize images
 for file in *.$FILE_TYPE; do
-    convert "$file" -resize "${WIDTH}x${HEIGHT}" "resized/$file"
+    convert "$file" -resize "${RESIZE_WIDTH}x${RESIZE_HEIGHT}" "resized/$file"
 done
 
 cd resized
